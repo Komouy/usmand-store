@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usmand Store - Joki & Jokgen Mobile Legends</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --gold: #ffc107;
+            --gold-dim: #c89116;
+            --gold-glow: rgba(255, 193, 7, 0.6);
+            --gold-faint: rgba(255, 193, 7, 0.08);
+            --black: #000000;
+            --black-mid: #0a0a0a;
+            --black-card: rgba(0,0,0,0.55);
+            --white: #ffffff;
+            --white-dim: rgba(255,255,255,0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px 60px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── ANIMATED BACKGROUND ── */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(200,145,22,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(255,193,7,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 50% at 10% 90%, rgba(200,145,22,0.1) 0%, transparent 55%),
+                #000;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0;
+            animation: floatUp var(--dur, 6s) ease-in infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes floatUp {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.4; }
+            90%  { opacity: 0.15; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Grid lines */
+        .grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,193,7,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,193,7,0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridShift 20s linear infinite;
+        }
+
+        @keyframes gridShift {
+            0%   { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* Scan line */
+        .scan-line {
+            position: absolute;
+            left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.3), transparent);
+            animation: scanDown 8s linear infinite;
+            box-shadow: 0 0 20px rgba(255,193,7,0.2);
+        }
+
+        @keyframes scanDown {
+            0%   { top: -2px; }
+            100% { top: 100%; }
+        }
+
+        /* ── MAIN CONTAINER ── */
+        .container {
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── PROFILE SECTION ── */
+        .profile {
+            text-align: center;
+            margin-bottom: 36px;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px;
+        }
+
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute;
+            top: 5px; left: 5px;
+            z-index: 2;
+            filter: drop-shadow(0 0 14px rgba(255,193,7,0.5));
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 0 14px rgba(255,193,7,0.5)); transform: scale(1); }
+            50%      { filter: drop-shadow(0 0 28px rgba(255,193,7,0.9)); transform: scale(1.04); }
+        }
+
+        /* Spinning ring around logo */
+        .logo-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: conic-gradient(from 0deg, var(--gold), transparent 60%, var(--gold) 100%) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            animation: ringRotate 3s linear infinite;
+        }
+
+        .logo-ring-2 {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            background: conic-gradient(from 180deg, transparent 60%, rgba(255,193,7,0.4) 100%) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            animation: ringRotate 5s linear infinite reverse;
+        }
+
+        @keyframes ringRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .store-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255,193,7,0.4);
+            margin-bottom: 6px;
+            animation: textFlicker 4s ease-in-out infinite;
+        }
+
+        @keyframes textFlicker {
+            0%, 95%, 100% { text-shadow: 0 0 20px rgba(255,193,7,0.4); }
+            96% { text-shadow: 0 0 40px rgba(255,193,7,0.9), 0 0 60px rgba(255,193,7,0.5); }
+        }
+
+        .store-subtitle {
+            font-size: 13px;
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .store-services {
+            font-size: 13px;
+            color: var(--white-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            background: rgba(255,193,7,0.12);
+            border: 1px solid rgba(255,193,7,0.35);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--gold);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* ── TRUST COUNTER SECTION ── */
+        .trust-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0 30px;
+            padding: 16px 20px;
+            background: rgba(255, 193, 7, 0.06);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            animation: fadeUp 0.8s 0.15s ease both;
+        }
+
+        .metric-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .metric-number {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--gold);
+            font-family: 'Orbitron', sans-serif;
+            min-width: 80px;
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--white-dim);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-icon {
+            font-size: 18px;
+            color: var(--gold);
+        }
+
+        .metric-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--gold);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* ── SOCIAL ICONS ── */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 28px;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glow line border social icon */
+        .social-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 19px;
+            position: relative;
+            background: rgba(255,193,7,0.06);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.18) translateY(-3px);
+            color: #000;
+        }
+
+        .social-icon:hover .social-bg { background: var(--gold); }
+
+        .social-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(0,0,0,0);
+            transition: background 0.3s ease;
+            z-index: 0;
+        }
+
+        .social-icon i { position: relative; z-index: 2; }
+
+        /* SVG glow ring */
+        .social-icon svg.glow-ring {
+            position: absolute;
+            inset: -4px;
+            width: calc(100% + 8px);
+            height: calc(100% + 8px);
+        }
+
+        .glow-ring circle {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2;
+            stroke-dasharray: 145;
+            stroke-dashoffset: 145;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 5px var(--gold)) drop-shadow(0 0 10px var(--gold-glow));
+            animation: glowOrbit 2.5s linear infinite;
+        }
+
+        .social-icon:nth-child(2) .glow-ring circle { animation-delay: 0.8s; }
+        .social-icon:nth-child(3) .glow-ring circle { animation-delay: 1.6s; }
+
+        @keyframes glowOrbit {
+            0%   { stroke-dashoffset: 145; opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { stroke-dashoffset: -145; opacity: 0; }
+        }
+
+        /* ── LINK BUTTONS ── */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+            animation: fadeUp 0.8s 0.35s ease both;
+        }
+
+        .link-button {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 22px;
+            background: var(--black-card);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            border: 1px solid rgba(255,193,7,0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Shimmer sweep on hover */
+        .link-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .link-button:hover::before { left: 150%; }
+
+        /* Left accent bar */
+        .link-button::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 15%; bottom: 15%;
+            width: 3px;
+            border-radius: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold-glow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-button:hover::after { opacity: 1; }
+
+        .link-button:hover {
+            transform: translateY(-3px) scale(1.01);
+            border-color: rgba(255,193,7,0.55);
+            box-shadow: 0 8px 24px rgba(255,193,7,0.18), 0 0 0 1px rgba(255,193,7,0.15);
+        }
+
+        .link-button i {
+            font-size: 22px;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .btn-wa i   { color: #25D366; }
+        .btn-ig i   { color: #E1306C; }
+        .btn-tt i   { color: #fff; }
+
+        .link-button .text { flex: 1; }
+        .link-button .arrow {
+            font-size: 13px;
+            color: rgba(255,193,7,0.5);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .link-button:hover .arrow {
+            transform: translateX(4px);
+            color: var(--gold);
+        }
+
+        /* Entry animation stagger */
+        .link-button:nth-child(1) { animation: slideIn 0.5s 0.4s ease both; }
+        .link-button:nth-child(2) { animation: slideIn 0.5s 0.55s ease both; }
+        .link-button:nth-child(3) { animation: slideIn 0.5s 0.7s ease both; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ── PRICE SECTION ── */
+        .ranks-section {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,193,7,0.15);
+            border-radius: 16px;
+            padding: 24px 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.8s 0.5s ease both;
+        }
+
+        /* Corner accent */
+        .ranks-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, rgba(255,193,7,0.2) 0%, transparent 70%);
+            border-radius: 16px 0 0 0;
+        }
+
+        .ranks-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 60px; height: 60px;
+            background: linear-gradient(315deg, rgba(255,193,7,0.12) 0%, transparent 70%);
+            border-radius: 0 0 16px 0;
+        }
+
+        .ranks-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ranks-title::before,
+        .ranks-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.4));
+        }
+
+        .ranks-title::after {
+            background: linear-gradient(90deg, rgba(255,193,7,0.4), transparent);
+        }
+
+        .price-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .price-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: rgba(255,193,7,0.04);
+            border: 1px solid rgba(255,193,7,0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-item::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--gold), var(--gold-dim));
+            border-radius: 3px 0 0 3px;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s ease;
+        }
+
+        .price-item:hover::before { transform: scaleY(1); }
+
+        .price-item:hover {
+            background: rgba(255,193,7,0.09);
+            border-color: rgba(255,193,7,0.3);
+            transform: translateX(4px);
+            box-shadow: 4px 0 16px rgba(255,193,7,0.1);
+        }
+
+        .price-rank {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .price-rank-image {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 6px rgba(255,193,7,0.25));
+            transition: filter 0.3s ease;
+        }
+
+        .price-item:hover .price-rank-image {
+            filter: drop-shadow(0 0 12px rgba(255,193,7,0.6));
+        }
+
+        .price-rank-name {
+            font-size: 12px;
+            color: var(--white-dim);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .price-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255,193,7,0.4);
+            transition: text-shadow 0.3s ease;
+        }
+
+        .price-item:hover .price-value {
+            text-shadow: 0 0 20px rgba(255,193,7,0.8);
+        }
+
+        /* Staggered price item entry */
+        .price-item { animation: priceIn 0.4s ease both; }
+        .price-item:nth-child(1) { animation-delay: 0.6s; }
+        .price-item:nth-child(2) { animation-delay: 0.7s; }
+        .price-item:nth-child(3) { animation-delay: 0.8s; }
+        .price-item:nth-child(4) { animation-delay: 0.9s; }
+        .price-item:nth-child(5) { animation-delay: 1.0s; }
+        .price-item:nth-child(6) { animation-delay: 1.1s; }
+        .price-item:nth-child(7) { animation-delay: 1.2s; }
+
+        @keyframes priceIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ── DIVIDER ── */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 8px 0 20px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.3), transparent);
+        }
+
+        .divider-dot {
+            width: 5px; height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--gold-glow);
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+            animation: fadeUp 0.8s 1s ease both;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .store-name { font-size: 22px; }
+            .link-button { font-size: 14px; padding: 14px 18px; }
+            .trust-metrics {
+                gap: 20px;
+                padding: 12px 16px;
+            }
+            .metric-number {
+                font-size: 20px;
+            }
+            .metric-label {
+                font-size: 10px;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-canvas">
+    <div class="bg-gradient"></div>
+    <div class="grid-lines"></div>
+    <div class="scan-line"></div>
+    <!-- Particles generated by JS -->
+</div>
+
+<div class="container">
+
+    <!-- Profile -->
+    <div class="profile">
+        <div class="logo-wrapper">
+            <div class="logo-ring-2"></div>
+            <img src="logo.png" alt="Usmand Store" class="logo-image">
+            <div class="logo-ring"></div>
+        </div>
+        <h1 class="store-name">USMAND STORE</h1>
+        <p class="store-subtitle">Joki &amp; Jokgen Mobile Legends</p>
+        <p class="store-services">
+            <span class="badge">⚡ PUSH RANK</span>
+            <span class="badge">✓ TERPERCAYA</span>
+            <span class="badge"><svg data-lucide="rocket"></svg> CEPAT</span>
+        </p>
+    </div>
+
+    <!-- Trust Metrics Counter -->
+    <div class="trust-metrics">
+        <div class="metric-item">
+            <div class="metric-icon"><svg data-lucide="check-circle"></svg></div>
+            <div class="metric-number" data-target="1200">0</div>
+            <div class="metric-label">ORDER SELESAI</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-icon"><svg data-lucide="star"></svg></div>
+            <div class="metric-number" data-target="4.8" data-decimal="1">0</div>
+            <div class="metric-label">RATING</div>
+        </div>
+    </div>
+
+    <!-- Social icons with glow ring -->
+    <div class="social-links">
+        <a href="https://wa.me/6281947926968" class="social-icon" title="WhatsApp">
+            <div class="social-bg"></div>
+            <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="27" cy="27" r="23"/>
+            </svg>
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://instagram.com/usmand_store" class="social-icon" title="Instagram">
+            <div class="social-bg"></div>
+            <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="27" cy="27" r="23"/>
+            </svg>
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://tiktok.com/@usmand_store" class="social-icon" title="TikTok">
+            <div class="social-bg"></div>
+            <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="27" cy="27" r="23"/>
+            </svg>
+            <i class="fab fa-tiktok"></i>
+        </a>
+    </div>
+
+    <!-- Link buttons -->
+    <div class="links">
+        <a href="https://wa.me/6281947926968" target="_blank" class="link-button btn-wa">
+            <i class="fab fa-whatsapp"></i>
+            <span class="text">WhatsApp</span>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="https://instagram.com/usmand_store" target="_blank" class="link-button btn-ig">
+            <i class="fab fa-instagram"></i>
+            <span class="text">Instagram</span>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="https://tiktok.com/@usmand_store" target="_blank" class="link-button btn-tt">
+            <i class="fab fa-tiktok"></i>
+            <span class="text">TikTok</span>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+    </div>
+
+    <!-- Price List: Joki Rank -->
+    <div class="ranks-section">
+        <h2 class="ranks-title">JOKI RANK</h2>
+        <div class="price-list">
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="grandmaster.png" alt="Grandmaster" class="price-rank-image">
+                    <span class="price-rank-name">GRANDMASTER / ★</span>
+                </div>
+                <span class="price-value">5K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="epic.png" alt="Epic" class="price-rank-image">
+                    <span class="price-rank-name">EPIC / ★</span>
+                </div>
+                <span class="price-value">6K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="legend.png" alt="Legend" class="price-rank-image">
+                    <span class="price-rank-name">LEGEND / ★</span>
+                </div>
+                <span class="price-value">7K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="mythic.png" alt="Mythic" class="price-rank-image">
+                    <span class="price-rank-name">MYTHIC (MAWI) / ★</span>
+                </div>
+                <span class="price-value">10K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="honor.png" alt="Honor" class="price-rank-image">
+                    <span class="price-rank-name">HONOR / ★</span>
+                </div>
+                <span class="price-value">12K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="glory.png" alt="Glory" class="price-rank-image">
+                    <span class="price-rank-name">GLORY / ★</span>
+                </div>
+                <span class="price-value">16K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="immortal.png" alt="Immortal" class="price-rank-image">
+                    <span class="price-rank-name">IMMORTAL / ★</span>
+                </div>
+                <span class="price-value">23K</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price List: Joki Gendong -->
+    <div class="ranks-section">
+        <h2 class="ranks-title">JOKI GENDONG</h2>
+        <div class="price-list">
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="grandmaster.png" alt="Grandmaster" class="price-rank-image">
+                    <span class="price-rank-name">GRANDMASTER / ★</span>
+                </div>
+                <span class="price-value">5K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="epic.png" alt="Epic" class="price-rank-image">
+                    <span class="price-rank-name">EPIC / ★</span>
+                </div>
+                <span class="price-value">7K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="legend.png" alt="Legend" class="price-rank-image">
+                    <span class="price-rank-name">LEGEND / ★</span>
+                </div>
+                <span class="price-value">9K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="mythic.png" alt="Mythic" class="price-rank-image">
+                    <span class="price-rank-name">MYTHIC (MAWI) / ★</span>
+                </div>
+                <span class="price-value">12K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="honor.png" alt="Honor" class="price-rank-image">
+                    <span class="price-rank-name">HONOR / ★</span>
+                </div>
+                <span class="price-value">14K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="glory.png" alt="Glory" class="price-rank-image">
+                    <span class="price-rank-name">GLORY / ★</span>
+                </div>
+                <span class="price-value">18K</span>
+            </div>
+            <div class="price-item">
+                <div class="price-rank">
+                    <img src="immortal.png" alt="Immortal" class="price-rank-image">
+                    <span class="price-rank-name">IMMORTAL / ★</span>
+                </div>
+                <span class="price-value">27K</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Usmand Store &nbsp;·&nbsp; All rights reserved.</p>
+    </div>
+</div>
+
+<script>
+    // Spawn floating particles
+    const canvas = document.querySelector('.bg-canvas');
+    const count = 22;
+
+    for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 3 + 1;
+        p.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${Math.random() * 100}%;
+            --dur: ${Math.random() * 8 + 5}s;
+            --delay: ${Math.random() * 8}s;
+            opacity: 0;
+        `;
+        canvas.appendChild(p);
+    }
+
+    // Staggered reveal on scroll (IntersectionObserver)
+    const items = document.querySelectorAll('.price-item');
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateX(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    items.forEach(el => obs.observe(el));
+
+    // Counter Animation Function
+    function animateCounter(element, target, duration = 2000, isDecimal = false) {
+        const start = 0;
+        const startTime = Date.now();
+        
+        const update = () => {
+            const now = Date.now();
+            const progress = Math.min((now - startTime) / duration, 1);
+            const current = start + (target - start) * progress;
+            
+            let displayValue;
+            if (isDecimal) {
+                displayValue = current.toFixed(1);
+            } else {
+                displayValue = Math.floor(current).toLocaleString();
+                // Add K+ suffix for order count (1200 -> 1.2K+)
+                if (target >= 1000) {
+                    displayValue = (Math.floor(current) / 1000).toFixed(1) + 'K+';
+                }
+            }
+            
+            element.textContent = displayValue;
+            
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        };
+        
+        update();
+    }
+
+    // Trigger counter animation when page loads
+    window.addEventListener('load', () => {
+        const counters = document.querySelectorAll('.metric-number');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const isDecimal = counter.getAttribute('data-decimal') === '1';
+            setTimeout(() => {
+                animateCounter(counter, target, 2000, isDecimal);
+            }, 300);
+        });
+    });
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+</script>
+</body>
+</html>
