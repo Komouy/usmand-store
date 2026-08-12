@@ -6,18 +6,13 @@
     <title>Usmand Store - Joki & Jokgen Mobile Legends</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --gold: #ffc107;
             --gold-dim: #c89116;
             --gold-glow: rgba(255, 193, 7, 0.6);
-            --gold-faint: rgba(255, 193, 7, 0.08);
-            --black: #000000;
-            --black-mid: #0a0a0a;
-            --black-card: rgba(0,0,0,0.55);
-            --white: #ffffff;
             --white-dim: rgba(255,255,255,0.7);
+            --black-card: rgba(0,0,0,0.55);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,7 +23,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 40px 20px 60px;
             position: relative;
             overflow-x: hidden;
@@ -52,7 +47,6 @@
                 #000;
         }
 
-        /* Floating particles */
         .particle {
             position: absolute;
             border-radius: 50%;
@@ -69,7 +63,6 @@
             100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
         }
 
-        /* Grid lines */
         .grid-lines {
             position: absolute;
             inset: 0;
@@ -85,14 +78,12 @@
             100% { transform: translateY(50px); }
         }
 
-        /* Scan line */
         .scan-line {
             position: absolute;
             left: 0; right: 0;
             height: 2px;
             background: linear-gradient(90deg, transparent, rgba(255,193,7,0.3), transparent);
             animation: scanDown 8s linear infinite;
-            box-shadow: 0 0 20px rgba(255,193,7,0.2);
         }
 
         @keyframes scanDown {
@@ -144,7 +135,6 @@
             50%      { filter: drop-shadow(0 0 28px rgba(255,193,7,0.9)); transform: scale(1.04); }
         }
 
-        /* Spinning ring around logo */
         .logo-ring {
             position: absolute;
             inset: 0;
@@ -177,7 +167,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 28px;
             font-weight: 900;
-            color: var(--white);
+            color: #fff;
             letter-spacing: 2px;
             text-shadow: 0 0 20px rgba(255,193,7,0.4);
             margin-bottom: 6px;
@@ -198,18 +188,19 @@
             margin-bottom: 10px;
         }
 
-        .store-services {
-            font-size: 13px;
-            color: var(--white-dim);
+        .store-badges {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .badge {
-            display: inline-block;
-            padding: 2px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
             background: rgba(255,193,7,0.12);
             border: 1px solid rgba(255,193,7,0.35);
             border-radius: 20px;
@@ -217,67 +208,6 @@
             color: var(--gold);
             font-weight: 600;
             letter-spacing: 1px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .badge svg {
-            width: 14px;
-            height: 14px;
-            stroke: var(--gold);
-            stroke-width: 2;
-            fill: none;
-        }
-
-        /* ── TRUST COUNTER SECTION ── */
-        .trust-metrics {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0 30px;
-            padding: 16px 20px;
-            background: rgba(255, 193, 7, 0.06);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            animation: fadeUp 0.8s 0.15s ease both;
-        }
-
-        .metric-item {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .metric-number {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--gold);
-            font-family: 'Orbitron', sans-serif;
-            min-width: 80px;
-            line-height: 1;
-        }
-
-        .metric-label {
-            font-size: 11px;
-            color: var(--white-dim);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-icon {
-            font-size: 18px;
-            color: var(--gold);
-        }
-
-        .metric-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--gold);
-            stroke-width: 2;
-            fill: none;
         }
 
         /* ── SOCIAL ICONS ── */
@@ -285,7 +215,7 @@
             display: flex;
             justify-content: center;
             gap: 18px;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             animation: fadeUp 0.8s 0.2s ease both;
         }
 
@@ -294,7 +224,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Glow line border social icon */
         .social-icon {
             width: 46px;
             height: 46px;
@@ -328,7 +257,6 @@
 
         .social-icon i { position: relative; z-index: 2; }
 
-        /* SVG glow ring */
         .social-icon svg.glow-ring {
             position: absolute;
             inset: -4px;
@@ -357,12 +285,36 @@
             100% { stroke-dashoffset: -145; opacity: 0; }
         }
 
+        /* ── CTA TEXT ── */
+        .cta-text {
+            text-align: center;
+            margin-bottom: 14px;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        .cta-text p {
+            font-size: 13px;
+            color: var(--white-dim);
+            line-height: 1.7;
+            padding: 10px 16px;
+            background: rgba(255,193,7,0.05);
+            border: 1px solid rgba(255,193,7,0.15);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .cta-text p::before {
+            content: '💬';
+            display: block;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
         /* ── LINK BUTTONS ── */
         .links {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 32px;
             animation: fadeUp 0.8s 0.35s ease both;
         }
 
@@ -372,7 +324,7 @@
             gap: 14px;
             padding: 16px 22px;
             background: var(--black-card);
-            color: var(--white);
+            color: #fff;
             text-decoration: none;
             border-radius: 14px;
             font-size: 16px;
@@ -385,7 +337,6 @@
             backdrop-filter: blur(8px);
         }
 
-        /* Shimmer sweep on hover */
         .link-button::before {
             content: '';
             position: absolute;
@@ -398,7 +349,6 @@
 
         .link-button:hover::before { left: 150%; }
 
-        /* Left accent bar */
         .link-button::after {
             content: '';
             position: absolute;
@@ -440,7 +390,6 @@
             color: var(--gold);
         }
 
-        /* Entry animation stagger */
         .link-button:nth-child(1) { animation: slideIn 0.5s 0.4s ease both; }
         .link-button:nth-child(2) { animation: slideIn 0.5s 0.55s ease both; }
         .link-button:nth-child(3) { animation: slideIn 0.5s 0.7s ease both; }
@@ -450,181 +399,6 @@
             to   { opacity: 1; transform: translateX(0); }
         }
 
-        /* ── PRICE SECTION ── */
-        .ranks-section {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,193,7,0.15);
-            border-radius: 16px;
-            padding: 24px 20px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-            animation: fadeUp 0.8s 0.5s ease both;
-        }
-
-        /* Corner accent */
-        .ranks-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 60px; height: 60px;
-            background: linear-gradient(135deg, rgba(255,193,7,0.2) 0%, transparent 70%);
-            border-radius: 16px 0 0 0;
-        }
-
-        .ranks-section::after {
-            content: '';
-            position: absolute;
-            bottom: 0; right: 0;
-            width: 60px; height: 60px;
-            background: linear-gradient(315deg, rgba(255,193,7,0.12) 0%, transparent 70%);
-            border-radius: 0 0 16px 0;
-        }
-
-        .ranks-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 3px;
-            margin-bottom: 18px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .ranks-title::before,
-        .ranks-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.4));
-        }
-
-        .ranks-title::after {
-            background: linear-gradient(90deg, rgba(255,193,7,0.4), transparent);
-        }
-
-        .price-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .price-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 14px;
-            background: rgba(255,193,7,0.04);
-            border: 1px solid rgba(255,193,7,0.1);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .price-item::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, var(--gold), var(--gold-dim));
-            border-radius: 3px 0 0 3px;
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.3s ease;
-        }
-
-        .price-item:hover::before { transform: scaleY(1); }
-
-        .price-item:hover {
-            background: rgba(255,193,7,0.09);
-            border-color: rgba(255,193,7,0.3);
-            transform: translateX(4px);
-            box-shadow: 4px 0 16px rgba(255,193,7,0.1);
-        }
-
-        .price-rank {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .price-rank-image {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 6px rgba(255,193,7,0.25));
-            transition: filter 0.3s ease;
-        }
-
-        .price-item:hover .price-rank-image {
-            filter: drop-shadow(0 0 12px rgba(255,193,7,0.6));
-        }
-
-        .price-rank-name {
-            font-size: 12px;
-            color: var(--white-dim);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .price-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(255,193,7,0.4);
-            transition: text-shadow 0.3s ease;
-        }
-
-        .price-item:hover .price-value {
-            text-shadow: 0 0 20px rgba(255,193,7,0.8);
-        }
-
-        /* Staggered price item entry */
-        .price-item { animation: priceIn 0.4s ease both; }
-        .price-item:nth-child(1) { animation-delay: 0.6s; }
-        .price-item:nth-child(2) { animation-delay: 0.7s; }
-        .price-item:nth-child(3) { animation-delay: 0.8s; }
-        .price-item:nth-child(4) { animation-delay: 0.9s; }
-        .price-item:nth-child(5) { animation-delay: 1.0s; }
-        .price-item:nth-child(6) { animation-delay: 1.1s; }
-        .price-item:nth-child(7) { animation-delay: 1.2s; }
-
-        @keyframes priceIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to   { opacity: 1; transform: translateX(0); }
-        }
-
-        /* ── DIVIDER ── */
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 8px 0 20px;
-        }
-
-        .section-divider::before,
-        .section-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.3), transparent);
-        }
-
-        .divider-dot {
-            width: 5px; height: 5px;
-            background: var(--gold);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--gold-glow);
-        }
-
         /* ── FOOTER ── */
         .footer {
             text-align: center;
@@ -632,26 +406,14 @@
             font-size: 11px;
             color: rgba(255,255,255,0.3);
             letter-spacing: 1px;
-            animation: fadeUp 0.8s 1s ease both;
+            animation: fadeUp 0.8s 0.8s ease both;
         }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 480px) {
             .store-name { font-size: 22px; }
             .link-button { font-size: 14px; padding: 14px 18px; }
-            .trust-metrics {
-                gap: 20px;
-                padding: 12px 16px;
-            }
-            .metric-number {
-                font-size: 20px;
-            }
-            .metric-label {
-                font-size: 10px;
-            }
         }
 
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             * { animation: none !important; transition: none !important; }
         }
@@ -659,12 +421,10 @@
 </head>
 <body>
 
-<!-- Background -->
 <div class="bg-canvas">
     <div class="bg-gradient"></div>
     <div class="grid-lines"></div>
     <div class="scan-line"></div>
-    <!-- Particles generated by JS -->
 </div>
 
 <div class="container">
@@ -678,14 +438,14 @@
         </div>
         <h1 class="store-name">USMAND STORE</h1>
         <p class="store-subtitle">Joki &amp; Jokgen Mobile Legends</p>
-        <p class="store-services">
+        <div class="store-badges">
             <span class="badge">⚡ PUSH RANK</span>
             <span class="badge">✓ TERPERCAYA</span>
-            <span class="badge"><svg data-lucide="rocket"></svg> CEPAT</span>
-        </p>
+            <span class="badge">🚀 CEPAT</span>
+        </div>
     </div>
 
-    <!-- Social icons with glow ring -->
+    <!-- Social Icons -->
     <div class="social-links">
         <a href="https://wa.me/6281947926968" class="social-icon" title="WhatsApp">
             <div class="social-bg"></div>
@@ -710,7 +470,12 @@
         </a>
     </div>
 
-    <!-- Link buttons -->
+    <!-- CTA Text -->
+    <div class="cta-text">
+        <p>Silahkan Yang Mau Order Atau Nanya-Nanya Bisa Langsung Ke WhatsApp</p>
+    </div>
+
+    <!-- Link Buttons -->
     <div class="links">
         <a href="https://wa.me/6281947926968" target="_blank" class="link-button btn-wa">
             <i class="fab fa-whatsapp"></i>
@@ -729,12 +494,14 @@
         </a>
     </div>
 
-<script>
-    // Spawn floating particles
-    const canvas = document.querySelector('.bg-canvas');
-    const count = 22;
+    <div class="footer">© 2025 Usmand Store · All Rights Reserved</div>
 
-    for (let i = 0; i < count; i++) {
+</div>
+
+<script>
+    // Floating particles
+    const canvas = document.querySelector('.bg-canvas');
+    for (let i = 0; i < 22; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
         const size = Math.random() * 3 + 1;
@@ -744,69 +511,10 @@
             left: ${Math.random() * 100}%;
             --dur: ${Math.random() * 8 + 5}s;
             --delay: ${Math.random() * 8}s;
-            opacity: 0;
         `;
         canvas.appendChild(p);
     }
-
-    // Staggered reveal on scroll (IntersectionObserver)
-    const items = document.querySelectorAll('.price-item');
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.style.opacity = '1';
-                e.target.style.transform = 'translateX(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-
-    items.forEach(el => obs.observe(el));
-
-    // Counter Animation Function
-    function animateCounter(element, target, duration = 2000, isDecimal = false) {
-        const start = 0;
-        const startTime = Date.now();
-        
-        const update = () => {
-            const now = Date.now();
-            const progress = Math.min((now - startTime) / duration, 1);
-            const current = start + (target - start) * progress;
-            
-            let displayValue;
-            if (isDecimal) {
-                displayValue = current.toFixed(1);
-            } else {
-                displayValue = Math.floor(current).toLocaleString();
-                // Add K+ suffix for order count (1200 -> 1.2K+)
-                if (target >= 1000) {
-                    displayValue = (Math.floor(current) / 1000).toFixed(1) + 'K+';
-                }
-            }
-            
-            element.textContent = displayValue;
-            
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        };
-        
-        update();
-    }
-
-    // Trigger counter animation when page loads
-    window.addEventListener('load', () => {
-        const counters = document.querySelectorAll('.metric-number');
-        counters.forEach(counter => {
-            const target = parseFloat(counter.getAttribute('data-target'));
-            const isDecimal = counter.getAttribute('data-decimal') === '1';
-            setTimeout(() => {
-                animateCounter(counter, target, 2000, isDecimal);
-            }, 300);
-        });
-    });
-
-    // Initialize Lucide Icons
-    lucide.createIcons();
 </script>
+
 </body>
 </html>
