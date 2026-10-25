@@ -285,6 +285,7 @@
 
         .social-icon:nth-child(2) .glow-ring circle { animation-delay: 0.8s; }
         .social-icon:nth-child(3) .glow-ring circle { animation-delay: 1.6s; }
+        .social-icon:nth-child(4) .glow-ring circle { animation-delay: 2.4s; }
 
         @keyframes glowOrbit {
             0%   { stroke-dashoffset: 145; opacity: 0; }
@@ -383,9 +384,10 @@
             text-align: center;
         }
 
-        .btn-wa i   { color: #25D366; }
-        .btn-ig i   { color: #E1306C; }
-        .btn-tt i   { color: #fff; }
+        .btn-wa i        { color: #25D366; }
+        .btn-channel i   { color: #25D366; }
+        .btn-ig i        { color: #E1306C; }
+        .btn-tt i        { color: #fff; }
 
         .link-button .text { flex: 1; }
         .link-button .arrow {
@@ -401,6 +403,7 @@
         .link-button:nth-child(1) { animation: slideIn 0.5s 0.4s ease both; }
         .link-button:nth-child(2) { animation: slideIn 0.5s 0.55s ease both; }
         .link-button:nth-child(3) { animation: slideIn 0.5s 0.7s ease both; }
+        .link-button:nth-child(4) { animation: slideIn 0.5s 0.85s ease both; }
 
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(-20px); }
@@ -414,7 +417,7 @@
             font-size: 11px;
             color: rgba(255,255,255,0.3);
             letter-spacing: 1px;
-            animation: fadeUp 0.8s 0.8s ease both;
+            animation: fadeUp 0.8s 0.95s ease both;
         }
 
         @media (max-width: 480px) {
@@ -455,21 +458,28 @@
 
     <!-- Social Icons -->
     <div class="social-links">
-        <a href="https://wa.me/6281947926968" class="social-icon" title="WhatsApp">
+        <a href="https://wa.me/6281947926968" target="_blank" rel="noopener noreferrer" class="social-icon" title="WhatsApp">
             <div class="social-bg"></div>
             <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="27" cy="27" r="23"/>
             </svg>
             <i class="fab fa-whatsapp"></i>
         </a>
-        <a href="https://instagram.com/usmand_store" class="social-icon" title="Instagram">
+        <a href="https://whatsapp.com/channel/0029VbEDBltLikgIivnw170P" target="_blank" rel="noopener noreferrer" class="social-icon" title="Saluran WhatsApp">
+            <div class="social-bg"></div>
+            <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="27" cy="27" r="23"/>
+            </svg>
+            <i class="fas fa-bullhorn"></i>
+        </a>
+        <a href="https://instagram.com/usmand_store" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram">
             <div class="social-bg"></div>
             <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="27" cy="27" r="23"/>
             </svg>
             <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://tiktok.com/@usmand_store" class="social-icon" title="TikTok">
+        <a href="https://tiktok.com/@usmand_store" target="_blank" rel="noopener noreferrer" class="social-icon" title="TikTok">
             <div class="social-bg"></div>
             <svg class="glow-ring" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="27" cy="27" r="23"/>
@@ -480,17 +490,22 @@
 
     <!-- Link Buttons -->
     <div class="links">
-        <a href="https://wa.me/6281947926968" target="_blank" class="link-button btn-wa">
+        <a href="https://wa.me/6281947926968" target="_blank" rel="noopener noreferrer" class="link-button btn-wa">
             <i class="fab fa-whatsapp"></i>
             <span class="text">WhatsApp</span>
             <i class="fas fa-chevron-right arrow"></i>
         </a>
-        <a href="https://instagram.com/usmand_store" target="_blank" class="link-button btn-ig">
+        <a href="https://whatsapp.com/channel/0029VbEDBltLikgIivnw170P" target="_blank" rel="noopener noreferrer" class="link-button btn-channel">
+            <i class="fab fa-whatsapp"></i>
+            <span class="text">Saluran WhatsApp</span>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="https://instagram.com/usmand_store" target="_blank" rel="noopener noreferrer" class="link-button btn-ig">
             <i class="fab fa-instagram"></i>
             <span class="text">Instagram</span>
             <i class="fas fa-chevron-right arrow"></i>
         </a>
-        <a href="https://tiktok.com/@usmand_store" target="_blank" class="link-button btn-tt">
+        <a href="https://tiktok.com/@usmand_store" target="_blank" rel="noopener noreferrer" class="link-button btn-tt">
             <i class="fab fa-tiktok"></i>
             <span class="text">TikTok</span>
             <i class="fas fa-chevron-right arrow"></i>
